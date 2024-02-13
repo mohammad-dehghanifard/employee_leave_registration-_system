@@ -1,12 +1,14 @@
 package logic
 import entities.Employee
 import entities.Vacation
+import java.lang.Exception
 
 class EmployeeService {
 
     fun registerEmployee(employeeList : MutableList<Employee>) {
        println("لطفا کدملی کارمند مورد نظر را وارد کنید...")
        val inputCode  = readln()
+       checkEmployee(inputCode = inputCode, employeeList = employeeList)
        println("نام کارمند را وارد کنید...")
        val firstName =  readln()
         println("نام خانوادگی کارمند را وارد کنید...")
@@ -24,5 +26,12 @@ class EmployeeService {
 
     fun setVacation() {
 
+    }
+
+    private fun checkEmployee(employeeList : MutableList<Employee>,inputCode : String) {
+        val findEmployee = employeeList.filter { it.code == inputCode }
+        if (findEmployee.isNotEmpty()){
+            throw Exception("در حال حاضر یک کاربر با این کدملی وجود دارد!")
+        }
     }
 }
