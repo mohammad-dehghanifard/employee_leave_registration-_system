@@ -8,7 +8,7 @@ class EmployeeService {
     fun registerEmployee(employeeList : MutableList<Employee>) {
        println("لطفا کدملی کارمند مورد نظر را وارد کنید...")
        val inputCode  = readln()
-       checkEmployee(inputCode = inputCode, employeeList = employeeList)
+        checkEmployeeForRegister(inputCode = inputCode, employeeList = employeeList)
        println("نام کارمند را وارد کنید...")
        val firstName =  readln()
         println("نام خانوادگی کارمند را وارد کنید...")
@@ -24,14 +24,29 @@ class EmployeeService {
         println("کارمند جدید با موفقیت ذخیره شد!")
     }
 
-    fun setVacation() {
-
+    fun setVacation(employeeList : MutableList<Employee>) {
+        println("لطفا کدملی کارمند مورد نظر را وارد کنید...")
+        val inputCode  = readln()
+        val employee : Employee = checkEmployeeForSetVacation(inputCode = inputCode, employeeList = employeeList)
+        println("لطفا تاریخ مورد نظر خود را وارد کنید")
+        val date : String = readln()
+        val vacation = Vacation(employeeCode = inputCode,date = date)
+        employee.vacations.add(vacation)
+        println("درخواست شما با موفقیت ثبت شد!")
     }
 
-    private fun checkEmployee(employeeList : MutableList<Employee>,inputCode : String) {
+    private fun checkEmployeeForRegister(employeeList : MutableList<Employee>,inputCode : String) {
         val findEmployee = employeeList.filter { it.code == inputCode }
         if (findEmployee.isNotEmpty()){
             throw Exception("در حال حاضر یک کاربر با این کدملی وجود دارد!")
         }
+    }
+
+    private fun checkEmployeeForSetVacation(employeeList : MutableList<Employee>,inputCode : String) : Employee {
+        val findEmployee = employeeList.filter { it.code == inputCode }
+        if (findEmployee.isEmpty()){
+            throw Exception("کارمندی  با این کد ملی ثبت نشده است!")
+        }
+        return findEmployee[0]
     }
 }
