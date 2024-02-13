@@ -1,7 +1,6 @@
 import utils.Menu.Companion.getMenu
 
 fun main() {
-
     while (true){
         when(getMenu()){
             0 -> {
